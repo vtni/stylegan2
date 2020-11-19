@@ -26,6 +26,9 @@ def project_image(proj, targets, png_prefix, num_snapshots):
         print('\r%d / %d ... ' % (proj.get_cur_step(), proj.num_steps), end='', flush=True)
         proj.step()
         if proj.get_cur_step() in snapshot_steps:
+            # pickle the latent representation
+            misc.save_pkl(proj.get_dlatents(), png_prefix + 'step%04d.pkl' % proj.get_cur_step())
+            # save image
             misc.save_image_grid(proj.get_images(), png_prefix + 'step%04d.png' % proj.get_cur_step(), drange=[-1,1])
     print('\r%-30s\r' % '', end='', flush=True)
 
